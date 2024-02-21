@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+    <joint name="kinect_camera_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="${chassis_length/2} 0 ${chassis_height/7}"/>
+        <parent link="base_link"/>
+        <child link="kinect_camera"/>
+    </joint>
+
+    <link name="kinect_camera">
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box size="0.07 0.3 0.09"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="/my_src/bcr_bot/bcr_bot/meshes/kinect/d415.dae"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+
+        <inertial>
+            <mass value="0.01"/>
+            <xacro:box_inertia m="0.01" x="0.07" y="0.3" z = "0.09"/>
+        </inertial>
+
+    </link>
+
+
+    <link name="kinect_camera_optical"/>
+
+    <joint name="kinect_camera_optical_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+        <parent link="kinect_camera"/>
+        <child link="kinect_camera_optical"/>
+    </joint>
+
+
+    <gazebo reference="kinect_camera">
+        <material>Gazebo/Red</material>
+
+        <sensor name="kinect_camera" type="depth">
+            <pose> 0 0 0 0 0 0 </pose>
+            <visualize>true</visualize>
+            <update_rate>10</update_rate>
+            <camera>
+                <horizontal_fov>1.089</horizontal_fov>
+                <image>
+                    <format>B8G8R8</format>
+                    <width>640</width>
+                    <height>480</height>
+                </image>
+                <clip>
+                    <near>0.05</near>
+                    <far>8.0</far>
+                </clip>
+            </camera>
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <frame_name>kinect_camera_link_optical</frame_name>
+                <min_depth>0.1</min_depth>
+                <max_depth>100.0</max_depth>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+</robot>

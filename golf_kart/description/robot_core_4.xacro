@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="robot">
+
+    <xacro:include filename="inertial_macros.xacro"/>
+
+      <!-- Chassis parameters -->
+      <xacro:property name="chassis_length" value="0.36"/>
+      <xacro:property name="chassis_width" value="0.3"/>
+      <xacro:property name="chassis_height" value="0.33"/>
+      <xacro:property name="chassis_mass" value="1.0"/>
+    
+      <!-- Wheel parameters -->
+      
+      <xacro:property name="wheel_radius" value="0.03"/>
+      <xacro:property name="wheel_thickness" value="0.04"/>
+      <xacro:property name="wheel_mass" value="0.05"/>
+      
+      <xacro:property name="wheel_offset_x" value="0.356"/>
+      <xacro:property name="wheel_offset_y" value="0.330"/>
+      <xacro:property name="wheel_offset_z" value="0.01"/>
+      
+      <xacro:property name="mesh_chassis_z" value="-0.015"/>
+      <xacro:property name="PI" value="3.1415926535897931" />
+      <!-- Simple Macro to calculate inertia -->
+      
+
+      <!--COLOR_RVIZ-->
+    <material name="white">
+        <color rgba="1 1 1 1" />
+    </material>
+
+    <material name="orange">
+        <color rgba="1 0.3 0.1 1"/>
+    </material>
+
+    <material name="blue">
+        <color rgba="0.2 0.2 1 1"/>
+    </material>
+
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
+
+    <material name="red">
+        <color rgba="1 0 0 1"/>
+    </material>
+    
+    <material name="gray">
+        <color rgba="0.5 0.5 0.5 1"/>
+    </material>
+
+     <!-- BASE LINK -->
+
+     <link name="base_link">
+
+     </link>
+ 
+     <!-- CHASSIS LINK -->
+
+    <joint name="chassis_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="chassis"/>
+        <origin xyz="0 0 0"/>
+    </joint>
+
+    <link name="chassis">
+
+        <visual>
+            <origin xyz="0 -0.266 0.48" rpy="0 0 0"/>
+            <geometry>
+                <!-- <mesh filename="/my_src/golf_kart/golf_kart/meshes/golf_kart.stl" scale="1 1 1"/> -->
+                
+                    <box size=">1.7526 2.1 0.95"/>
+                
+            </geometry>
+            <material name="gray"/>
+            
+        </visual>
+        
+        <collision>
+            
+            <origin xyz="0 -0.266 0.48"/>
+            <geometry>
+                <box size=">1.7526 2.1 0.95"/>
+            </geometry>
+        </collision>
+
+        <!-- <xacro:inertial_box mass="0.5" x="0.3" y="0.3" z="0.15">
+            <origin xyz="0.15 0 0.075" rpy="0 0 0"/>
+        </xacro:inertial_box> -->
+
+    </link>
+
+    <!-- <gazebo reference="chassis">
+        <material>Gazebo/Whitek</material>
+    </gazebo> -->
+
+</robot>
